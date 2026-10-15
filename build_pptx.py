@@ -41,7 +41,7 @@ prs = Presentation()
 prs.slide_width = Inches(13.333)
 prs.slide_height = Inches(7.5)
 BLANK = prs.slide_layouts[6]
-TOTAL = 22
+TOTAL = 15
 
 
 def rgb(h):
@@ -235,42 +235,11 @@ def dark_slide():
 
 P1 = "PART 1 · 게임 흐름과 책임"
 P2 = "PART 2 · 서버 구성 요소"
-P3 = "PART 3 · 통신 방식"
-P4 = "PART 4 · 데이터 · 매칭 · 실시간"
-P5 = "PART 5 · 데모와 AI 활용"
+P3 = "PART 3 · 데이터 저장"
+P4 = "PART 4 · 통신 방식과 실시간 데이터"
+P5 = "PART 5 · 매칭 설계"
 
-# ---------------------------------------------------------------- 1. 표지
-s = dark_slide()
-box(s, 0.9, 1.55, 0.12, 2.3, fill=ACCENT, shape=MSO_SHAPE.RECTANGLE)
-tx(s, 1.25, 1.45, 10, 0.5, "LEVEL 9", size=18, bold=True, color="93C5FD")
-tx(s, 1.25, 1.95, 11, 1.3, "클라이언트 서버 통신과 멀티플레이", size=44, bold=True, color=WHITE)
-tx(s, 1.25, 3.15, 11, 0.7, "소규모(2~5인) 협동·경쟁 게임으로 보는 서버와 데이터의 흐름", size=20, color="CBD5E1")
-tx(s, 1.25, 5.6, 11, 0.4, "함께 보는 자료 · 서버 타입과 통신 방식 핸드아웃", size=14, color="94A3B8")
-
-# ---------------------------------------------------------------- 2. 진행
-s = content_slide("오늘의 진행", "SDK 사용법보다 구조를 본다")
-agenda = [
-    ("01", "게임 흐름과 책임", "게임 한 판의 흐름 · 누가 무엇을 책임지는가", "6분"),
-    ("02", "서버 구성 요소", "API · 매칭 · 게임 룸 · 판정 주체 · 저장소", "24분"),
-    ("03", "통신 방식", "TCP · UDP · HTTP REST · WebSocket", "12분"),
-    ("04", "데이터 · 매칭 · 실시간", "Firebase 저장 · 매칭 상태도 · 예외 · 최적화", "16분"),
-    ("05", "데모와 AI 활용", "Firebase 매칭 데모 · AI 초안 검토와 검증", "12분"),
-    ("—", "정리와 질의응답", "설계 순서 6단계 · 여러분의 프로젝트", "15분"),
-]
-for i, (num, title, topics, mins) in enumerate(agenda):
-    y = 1.65 + i * 0.78
-    tx(s, 0.6, y, 0.9, 0.6, num, size=24, bold=True, color=ACCENT, anchor="m")
-    tx(s, 1.55, y, 4.1, 0.6, title, size=20, bold=True, anchor="m")
-    tx(s, 5.7, y, 5.6, 0.6, topics, size=14, color=MUTED, anchor="m")
-    tx(s, 11.4, y, 1.33, 0.6, mins, size=14, color=MUTED, align="r", anchor="m")
-    if i < len(agenda) - 1:
-        arrow(s, 0.6, y + 0.7, 12.73, y + 0.7, color="E5E7EB", w=0.75, head=False)
-tx(s, 0.6, 6.45, 12.1, 0.4,
-   [[("세 가지 질문을 계속 묻는다  ", {"bold": True, "color": INK}),
-     ("누가 결정하는가 · 무엇을 어디에 저장하는가 · 어떻게 전달하는가", {"color": ACCENT, "bold": True})]],
-   size=15)
-
-# ---------------------------------------------------------------- 3. 게임 흐름
+# ---------------------------------------------------------------- 1. 게임 흐름
 s = content_slide(P1, "오늘의 게임 흐름")
 steps = [("로그인", "API 서버", API, API_T), ("프로필 로드", "API · DB", API, API_T),
          ("로비", "API · 알림", API, API_T), ("매칭", "매칭 서버", MATCH, MATCH_T),
@@ -293,7 +262,7 @@ for i, (who, how, q) in enumerate(views):
     tx(s, x + 0.25, 4.42, 3.4, 0.5, how, size=19, bold=True)
     tx(s, x + 0.25, 5.05, 3.4, 1.2, q, size=14, color="374151", after=4)
 
-# ---------------------------------------------------------------- 4. 책임
+# ---------------------------------------------------------------- 2. 책임
 s = content_slide(P1, "누가 무엇을 책임지는가")
 cards = [("클라이언트", "빠르게 보여 준다", ["화면", "입력", "로컬 표현"], CLIENT),
          ("서버", "판단하고 확정한다", ["요청 처리", "상태 관리", "권한 검증"], API),
@@ -315,7 +284,7 @@ box(s, 6.5, 4.65, 6.23, 1.95, fill=NAVY, radius=0.06)
 tx(s, 6.8, 4.85, 5.7, 0.7, "누가 결과를 확정하는가?", size=28, bold=True, color=WHITE)
 tx(s, 6.8, 5.6, 5.7, 0.8, "서버 구조를 결정하는 가장 중요한 질문\n“나 이겼어, 보상 줘”를 그대로 믿어도 될까?", size=14, color="CBD5E1", after=2)
 
-# ---------------------------------------------------------------- 5. 서버 타입
+# ---------------------------------------------------------------- 3. 서버 타입
 s = content_slide(P2, "서버 타입 한눈에 보기")
 tag(s, "핸드아웃 §1 · §2")
 box(s, 0.6, 3.3, 1.6, 1.0, "클라이언트", fill=CLIENT_T, line=CLIENT, lw=1.25, size=15, bold=True)
@@ -346,7 +315,7 @@ box(s, 0.6, 6.05, 12.13, 0.7,
       ("→ 이름보다 책임과 데이터 흐름을 먼저 나눈다", {"bold": True, "color": ACCENT})]],
     fill="EFF6FF", size=15, align="l", margin=0.25)
 
-# ---------------------------------------------------------------- 6. API 서버
+# ---------------------------------------------------------------- 4. API 서버
 s = content_slide(P2, "API 서버는 요청과 응답을 처리한다")
 reqs = [("POST /login", "인증 · 프로필 확인"), ("GET /profile", "프로필 반환"), ("POST /result", "결과 검증 · 저장")]
 for i, (ep, res) in enumerate(reqs):
@@ -377,7 +346,7 @@ for i, (k, v) in enumerate(docs):
     tx(s, x + 0.15, y + 0.1, 2.6, 0.35, k, size=15, bold=True, color=API)
     tx(s, x + 0.15, y + 0.47, 2.6, 0.55, v, size=12, color="374151")
 
-# ---------------------------------------------------------------- 7. 매칭 vs 룸
+# ---------------------------------------------------------------- 5. 매칭 vs 룸
 s = content_slide(P2, "매칭 서버와 게임 룸은 다르다")
 lanes = [("매칭 서버", "자리를 안내하는 직원", ["대기열 등록", "조건 비교", "방 ID 배정"],
           "목표: 같은 조건의 사용자를 빠르게 묶어 방에 넣는다", MATCH, MATCH_T),
@@ -400,7 +369,7 @@ tx(s, 1.4, 5.6, 11.1, 0.45, "취소와 매칭 확정이 동시에 일어나면?"
 tx(s, 1.4, 6.08, 11.1, 0.6, "한쪽은 ‘취소됨’, 상대는 ‘매칭 완료’ → 최종 상태를 미리 정하고, 서버는 상태 변경을 하나씩 처리한다",
    size=14)
 
-# ---------------------------------------------------------------- 8. 릴레이 vs 전용
+# ---------------------------------------------------------------- 6. 릴레이 vs 전용
 s = content_slide(P2, "실시간 릴레이와 전용 게임 서버")
 cols = [("실시간 릴레이 룸", "우체국: 메시지를 전달만 한다", "64748B",
          [("판정 주체", "클라이언트 또는 호스트"), ("적합한 상황", "캐주얼 협동, 빠른 프로토타입"),
@@ -425,35 +394,8 @@ box(s, 2.6, 5.75, 3.6, 0.5, "서버 비용 · 구현 난도  ↑", fill="F1F5F9"
 box(s, 7.1, 5.75, 3.6, 0.5, "공정성 · 검증 능력  ↑", fill="DBEAFE", size=14, bold=True, color="1E3A8A", radius=0.5)
 tx(s, 0.6, 6.42, 12.13, 0.45, "메시지가 서버를 지나가도, 서버가 게임 규칙을 판정하는 것은 아니다.", size=16, bold=True, color=WARN, align="c")
 
-# ---------------------------------------------------------------- 9. 판정 구조 4가지
-s = content_slide(P2, "누가 게임 결과를 확정하는가: 네 가지 구조")
-tag(s, "핸드아웃 §5")
-arrow(s, 1.0, 1.82, 12.3, 1.82, color="94A3B8", w=2.25)
-tx(s, 0.6, 1.5, 3, 0.3, "빠르게 만들기 쉬움", size=12, bold=True, color=MUTED)
-tx(s, 9.7, 1.5, 3, 0.3, "공정한 판정에 유리", size=12, bold=True, color=MUTED, align="r")
-models = [("클라이언트 주도", "각 플레이어 클라이언트", "빠르게 만들기 쉽다", "조작과 불일치에 약하다"),
-          ("호스트 클라이언트", "방장 역할의 클라이언트", "별도 서버 비용이 적다", "호스트 이탈 · 호스트 조작"),
-          ("릴레이 룸", "클라이언트들 (공유 상태)", "소규모 협동에 단순하다", "권한 있는 판정 서버 아님"),
-          ("전용 게임 서버", "서버", "공정한 판정과 검증", "서버 호스팅과 운영 필요")]
-for i, (name, who, pro, con) in enumerate(models):
-    x = 0.6 + i * 3.08
-    hl = i == 3
-    box(s, x, 2.1, 2.9, 3.15, fill="EFF6FF" if hl else PANEL, line=ACCENT if hl else "E5E7EB",
-        lw=1.5 if hl else 1, radius=0.05)
-    tx(s, x + 0.2, 2.22, 2.5, 0.3, f"0{i + 1}", size=13, bold=True, color=ACCENT)
-    tx(s, x + 0.2, 2.5, 2.6, 0.45, name, size=18, bold=True)
-    tx(s, x + 0.2, 2.95, 2.6, 0.55, [[("판정  ", {"color": MUTED}), (who, {"bold": True})]], size=12)
-    tx(s, x + 0.2, 3.55, 2.6, 0.3, "장점", size=12, bold=True, color=GOOD)
-    tx(s, x + 0.2, 3.82, 2.6, 0.55, pro, size=14)
-    tx(s, x + 0.2, 4.4, 2.6, 0.3, "위험 · 비용", size=12, bold=True, color=WARN)
-    tx(s, x + 0.2, 4.67, 2.6, 0.55, con, size=14)
-box(s, 0.6, 5.45, 12.13, 1.3, fill=NAVY, radius=0.06)
-tx(s, 0.95, 5.58, 11.5, 0.5, "전적 · 보상 · 랭킹은 신뢰할 수 있는 서버 검증을 거친 뒤 저장한다", size=20, bold=True, color=WHITE)
-tx(s, 0.95, 6.12, 11.5, 0.5, "플레이는 릴레이로 가볍게, 저장하는 순간에는 서버가 검증  (예: 5분 경기를 10초 만에 이겼다는 결과는 거부)",
-   size=14, color="CBD5E1")
-
-# ---------------------------------------------------------------- 10. 저장소
-s = content_slide(P2, "DB, 캐시, Firebase의 역할")
+# ---------------------------------------------------------------- 7. 저장소
+s = content_slide(P3, "DB, 캐시, Firebase의 역할")
 stores = [("수명: 몇 달 이상", "DB · Firebase", "영구 · 정확해야 한다", ["계정 · 프로필", "전적 · 보상", "구매 기록"], DB),
           ("수명: 몇 분 ~ 몇 시간", "캐시", "빠르지만 사라질 수 있다", ["세션", "대기열", "짧게 유지할 룸 상태"], CACHE),
           ("수명: 몇 초", "실시간 룸", "곧 의미가 없어진다", ["입력 · 위치", "준비 상태", "순간 이벤트"], ROOM)]
@@ -473,8 +415,35 @@ for i, (h, b) in enumerate([("실시간 위치를 모두 영구 DB에 쓰면", "
     tx(s, x + 0.8, 5.4, 5.0, 0.45, h, size=16, bold=True, color=WARN)
     tx(s, x + 0.8, 5.85, 5.0, 0.8, b, size=14)
 
-# ---------------------------------------------------------------- 11. TCP
-s = content_slide(P3, "연결지향 통신: TCP")
+# ---------------------------------------------------------------- 8. Firebase 저장
+s = content_slide(P3, "Firebase에는 무엇을 저장할까")
+tx(s, 0.6, 1.7, 5.5, 1.1, "게임을 껐다 켜도\n남아야 하는 데이터", size=26, bold=True, spacing=1.05)
+for i, t in enumerate(["사용자 ID와 프로필", "인벤토리와 설정", "전적과 보상 지급 기록", "검증된 경기 결과"]):
+    y = 3.05 + i * 0.72
+    box(s, 0.6, y, 0.42, 0.42, "✓", fill=DB_T, shape=MSO_SHAPE.OVAL, size=13, bold=True, color=DB, margin=0)
+    tx(s, 1.2, y - 0.04, 4.8, 0.5, t, size=18, bold=(i == 3), color=WARN if i == 3 else INK, anchor="m")
+tx(s, 6.55, 1.7, 6.2, 0.4, "보상 · 전적은 이렇게 저장한다", size=17, bold=True)
+box(s, 6.55, 2.45, 1.75, 1.0, "클라이언트", fill=CLIENT_T, line=CLIENT, size=15, bold=True)
+box(s, 8.75, 2.45, 1.85, 1.0, [{"runs": "서버 측 검증", "bold": True},
+                               {"runs": "Cloud Functions 등", "size": 11, "color": MUTED}],
+    fill=API_T, line=API, size=15)
+box(s, 11.05, 2.35, 1.65, 1.2, "Firebase", fill=DB_T, line=DB, shape=MSO_SHAPE.CAN, size=14, bold=True)
+arrow(s, 8.32, 2.95, 8.72, 2.95, color=API)
+tx(s, 7.95, 2.12, 1.2, 0.3, "결과 제출", size=11, bold=True, color=API, align="c")
+arrow(s, 10.62, 2.95, 11.02, 2.95, color=API)
+tx(s, 10.2, 2.12, 1.25, 0.3, "검증된 값만", size=11, bold=True, color=API, align="c")
+path(s, [(7.42, 3.47), (7.42, 3.95), (11.87, 3.95), (11.87, 3.57)], color="DC2626", dash=True)
+tx(s, 7.6, 4.0, 4.2, 0.35, "✕ 클라이언트가 보상 값을 직접 쓰기", size=12, bold=True, color="DC2626", align="c")
+for i, (k, v) in enumerate([("권한 규칙", "보상 · 전적 필드는 클라이언트가 직접 못 쓰게 보안 규칙으로 막는다"),
+                            ("중복 처리 기준", "같은 경기 ID의 결과는 한 번만 반영한다")]):
+    x = 6.55 + i * 3.13
+    box(s, x, 4.65, 3.02, 2.0, fill=PANEL, line="E5E7EB", radius=0.06)
+    tx(s, x + 0.2, 4.8, 2.65, 0.4, k, size=17, bold=True, color=ACCENT)
+    tx(s, x + 0.2, 5.3, 2.65, 1.3, v, size=14)
+box(s, 0.6, 6.0, 5.6, 0.65, "편리함 = 위험: 클라이언트가 DB에 직접 쓸 수 있다", fill=WARN_T, size=14, bold=True, color=WARN)
+
+# ---------------------------------------------------------------- 9. TCP
+s = content_slide(P4, "연결지향 통신: TCP")
 tag(s, "핸드아웃 §3")
 tx(s, 0.6, 1.7, 5.4, 1.1, "연결을 만들고 유지하며,\n순서와 전달을 보장한다.", size=24, bold=True, spacing=1.1)
 tx(s, 0.6, 2.95, 5.4, 0.35, "비유: 전화 통화 · 연결부터 맺고 이야기한다", size=13, color=MUTED)
@@ -506,8 +475,8 @@ box(s, 0.6, 5.95, 12.13, 0.8,
       ("빠르게 변하는 위치값에는 불리할 수 있다 (턴제·느린 협동이라면 TCP로 충분)", {})]],
     fill=WARN_T, size=14, align="l", margin=0.3)
 
-# ---------------------------------------------------------------- 12. UDP
-s = content_slide(P3, "비연결지향 통신: UDP")
+# ---------------------------------------------------------------- 10. UDP
+s = content_slide(P4, "비연결지향 통신: UDP")
 tag(s, "핸드아웃 §3")
 tx(s, 0.6, 1.7, 5.9, 1.1, "각 패킷은 독립적으로 전송된다.\n최신 데이터가 더 중요할 때 쓴다.", size=22, bold=True, spacing=1.1)
 for i, t in enumerate(["이동 입력", "위치 스냅샷", "빠른 액션 게임 상태"]):
@@ -541,8 +510,8 @@ for i, (k, v) in enumerate(fixes):
 tx(s, 0.6, 6.45, 12.13, 0.4, "대부분의 게임 네트워크 라이브러리는 UDP 위에 ‘확실한 채널’과 ‘빠른 채널’을 함께 제공한다 → 데이터마다 채널을 고르는 것은 우리 몫",
    size=13, color=MUTED)
 
-# ---------------------------------------------------------------- 13. REST / WebSocket
-s = content_slide(P3, "HTTP REST와 WebSocket")
+# ---------------------------------------------------------------- 11. REST / WebSocket
+s = content_slide(P4, "HTTP REST와 WebSocket")
 tag(s, "핸드아웃 §3 · §4")
 tx(s, 0.6, 1.95, 1.4, 0.9, "응용 방식", size=13, bold=True, color=MUTED, anchor="m")
 tx(s, 0.6, 3.05, 1.4, 0.8, "전송 계층", size=13, bold=True, color=MUTED, anchor="m")
@@ -565,36 +534,31 @@ tx(s, 0.95, 5.4, 11.5, 0.38, [[("✕  ", {"color": "F87171", "bold": True}), ("�
 tx(s, 0.95, 5.78, 11.5, 0.5, [[("○  ", {"color": "4ADE80", "bold": True}), ("“이 데이터에는 어떤 전달 특성이 필요한가?”", {"color": WHITE, "bold": True})]], size=21)
 tx(s, 1.4, 6.3, 11.0, 0.38, "정확해야 하나 · 빨라야 하나 · 서버가 먼저 알려 줘야 하나", size=14, color="CBD5E1")
 
-# ---------------------------------------------------------------- 14. Firebase 저장
-s = content_slide(P4, "Firebase에는 무엇을 저장할까")
-tx(s, 0.6, 1.7, 5.5, 1.1, "게임을 껐다 켜도\n남아야 하는 데이터", size=26, bold=True, spacing=1.05)
-for i, t in enumerate(["사용자 ID와 프로필", "인벤토리와 설정", "전적과 보상 지급 기록", "검증된 경기 결과"]):
-    y = 3.05 + i * 0.72
-    box(s, 0.6, y, 0.42, 0.42, "✓", fill=DB_T, shape=MSO_SHAPE.OVAL, size=13, bold=True, color=DB, margin=0)
-    tx(s, 1.2, y - 0.04, 4.8, 0.5, t, size=18, bold=(i == 3), color=WARN if i == 3 else INK, anchor="m")
-tx(s, 6.55, 1.7, 6.2, 0.4, "보상 · 전적은 이렇게 저장한다", size=17, bold=True)
-box(s, 6.55, 2.45, 1.75, 1.0, "클라이언트", fill=CLIENT_T, line=CLIENT, size=15, bold=True)
-box(s, 8.75, 2.45, 1.85, 1.0, [{"runs": "서버 측 검증", "bold": True},
-                               {"runs": "Cloud Functions 등", "size": 11, "color": MUTED}],
-    fill=API_T, line=API, size=15)
-box(s, 11.05, 2.35, 1.65, 1.2, "Firebase", fill=DB_T, line=DB, shape=MSO_SHAPE.CAN, size=14, bold=True)
-arrow(s, 8.32, 2.95, 8.72, 2.95, color=API)
-tx(s, 7.95, 2.12, 1.2, 0.3, "결과 제출", size=11, bold=True, color=API, align="c")
-arrow(s, 10.62, 2.95, 11.02, 2.95, color=API)
-tx(s, 10.2, 2.12, 1.25, 0.3, "검증된 값만", size=11, bold=True, color=API, align="c")
-path(s, [(7.42, 3.47), (7.42, 3.95), (11.87, 3.95), (11.87, 3.57)], color="DC2626", dash=True)
-tx(s, 7.6, 4.0, 4.2, 0.35, "✕ 클라이언트가 보상 값을 직접 쓰기", size=12, bold=True, color="DC2626", align="c")
-for i, (k, v) in enumerate([("권한 규칙", "보상 · 전적 필드는 클라이언트가 직접 못 쓰게 보안 규칙으로 막는다"),
-                            ("중복 처리 기준", "같은 경기 ID의 결과는 한 번만 반영한다")]):
-    x = 6.55 + i * 3.13
-    box(s, x, 4.65, 3.02, 2.0, fill=PANEL, line="E5E7EB", radius=0.06)
-    tx(s, x + 0.2, 4.8, 2.65, 0.4, k, size=17, bold=True, color=ACCENT)
-    tx(s, x + 0.2, 5.3, 2.65, 1.3, v, size=14)
-box(s, 0.6, 6.0, 5.6, 0.65, "편리함 = 위험: 클라이언트가 DB에 직접 쓸 수 있다", fill=WARN_T, size=14, bold=True, color=WARN)
+# ---------------------------------------------------------------- 12. 실시간 최적화
+s = content_slide(P4, "실시간 데이터와 최적화")
+box(s, 0.6, 1.65, 12.13, 0.7, "필요한 데이터만  ·  필요한 대상에게  ·  필요한 주기로", fill="EFF6FF", size=22, bold=True, color=ACCENT)
+kinds = [("입력", "이동 · 공격 · 선택", "플레이어가 한 행동\n→ 서버로 보내 처리한다", CLIENT),
+         ("상태", "위치 · 체력 · 점수", "최신 값만 중요\n→ 주기적으로 보내고 옛값은 버린다", API),
+         ("이벤트", "피격 · 이모트 · 알림", "한 번 일어나고 끝\n→ 확실히 한 번 전달한다", ROOM)]
+for i, (k, ex, how, c) in enumerate(kinds):
+    x = 0.6 + i * 4.14
+    box(s, x, 2.6, 3.85, 2.2, fill=PANEL, line="E5E7EB", radius=0.05)
+    box(s, x, 2.6, 0.1, 2.2, fill=c, shape=MSO_SHAPE.RECTANGLE)
+    tx(s, x + 0.35, 2.75, 3.3, 0.5, k, size=22, bold=True, color=c)
+    tx(s, x + 0.35, 3.3, 3.3, 0.4, ex, size=15, bold=True)
+    tx(s, x + 0.35, 3.8, 3.35, 0.95, how, size=13, color="374151")
+tips = [("바뀐 값만 보낸다", "체력이 그대로면 체력은 빼고 보낸다"),
+        ("멀리 있는 대상은 덜 자주", "시야 밖 플레이어는 갱신 주기를 늘린다"),
+        ("늦은 입장자는 스냅샷부터", "현재 상태 + 그 뒤 이벤트만")]
+for i, (k, v) in enumerate(tips):
+    x = 0.6 + i * 4.14
+    tx(s, x, 5.1, 0.6, 0.5, f"{i + 1}", size=26, bold=True, color=ACCENT)
+    tx(s, x + 0.55, 5.12, 3.3, 0.45, k, size=17, bold=True)
+    tx(s, x + 0.55, 5.58, 3.3, 0.9, v, size=13, color=MUTED)
 
-# ---------------------------------------------------------------- 15. 매칭 상태도
-s = content_slide(P4, "기본 매칭 상태도")
-tag(s, "1분 토론", color=WARN, fill=WARN_T, x=11.25, w=1.48)
+# ---------------------------------------------------------------- 13. 매칭 상태도
+s = content_slide(P5, "기본 매칭 상태도")
+tag(s, "3분 토론", color=WARN, fill=WARN_T, x=11.25, w=1.48)
 states = [("Lobby", "로비", API, API_T), ("Waiting", "대기", MATCH, MATCH_T), ("Matched", "매칭됨", MATCH, MATCH_T),
           ("Room", "방 입장", ROOM, ROOM_T), ("Playing", "경기 중", ROOM, ROOM_T), ("Result", "결과", API, API_T)]
 sw, sx = 1.55, [0.7, 2.75, 4.8, 6.85, 8.9, 10.95]
@@ -627,8 +591,8 @@ table(s, 4.45, 5.0, [2.45, 1.4, 1.4, 3.03], [
      [("?", {"color": WARN, "bold": True})], [("함께 정해 보기", {"color": WARN, "bold": True})]],
 ], row_h=0.43, head_h=0.42, size=13)
 
-# ---------------------------------------------------------------- 16. 매칭 예외
-s = content_slide(P4, "매칭 예외와 테스트")
+# ---------------------------------------------------------------- 14. 매칭 예외
+s = content_slide(P5, "매칭 예외와 테스트")
 table(s, 0.6, 1.7, [4.4, 7.73], [
     ["예외 상황", "기대하는 최종 상태 (예시)"],
     ["대기 중 취소", "대기열에서 빠지고 로비로 돌아간다"],
@@ -644,119 +608,7 @@ tx(s, 0.95, 5.65, 11.5, 0.5, [[("“어떤 오류가 났나?”", {"color": "94A
 tx(s, 0.95, 6.18, 11.5, 0.45, "테스트 문장 예: Waiting에서 취소와 확정이 동시에 오면, 두 사용자의 상태는 서로 모순되지 않아야 한다",
    size=13, color="CBD5E1")
 
-# ---------------------------------------------------------------- 17. 실시간 최적화
-s = content_slide(P4, "실시간 데이터와 최적화")
-box(s, 0.6, 1.65, 12.13, 0.7, "필요한 데이터만  ·  필요한 대상에게  ·  필요한 주기로", fill="EFF6FF", size=22, bold=True, color=ACCENT)
-kinds = [("입력", "이동 · 공격 · 선택", "플레이어가 한 행동\n→ 서버로 보내 처리한다", CLIENT),
-         ("상태", "위치 · 체력 · 점수", "최신 값만 중요\n→ 주기적으로 보내고 옛값은 버린다", API),
-         ("이벤트", "피격 · 이모트 · 알림", "한 번 일어나고 끝\n→ 확실히 한 번 전달한다", ROOM)]
-for i, (k, ex, how, c) in enumerate(kinds):
-    x = 0.6 + i * 4.14
-    box(s, x, 2.6, 3.85, 2.2, fill=PANEL, line="E5E7EB", radius=0.05)
-    box(s, x, 2.6, 0.1, 2.2, fill=c, shape=MSO_SHAPE.RECTANGLE)
-    tx(s, x + 0.35, 2.75, 3.3, 0.5, k, size=22, bold=True, color=c)
-    tx(s, x + 0.35, 3.3, 3.3, 0.4, ex, size=15, bold=True)
-    tx(s, x + 0.35, 3.8, 3.35, 0.95, how, size=13, color="374151")
-tips = [("바뀐 값만 보낸다", "체력이 그대로면 체력은 빼고 보낸다"),
-        ("멀리 있는 대상은 덜 자주", "시야 밖 플레이어는 갱신 주기를 늘린다"),
-        ("늦은 입장자는 스냅샷부터", "현재 상태 + 그 뒤 이벤트만")]
-for i, (k, v) in enumerate(tips):
-    x = 0.6 + i * 4.14
-    tx(s, x, 5.1, 0.6, 0.5, f"{i + 1}", size=26, bold=True, color=ACCENT)
-    tx(s, x + 0.55, 5.12, 3.3, 0.45, k, size=17, bold=True)
-    tx(s, x + 0.55, 5.58, 3.3, 0.9, v, size=13, color=MUTED)
-
-# ---------------------------------------------------------------- 18. 데모
-s = content_slide(P5, "Firebase 매칭 데모")
-demo = [("1", "첫 번째 사용자", "매칭 신청 → waiting"),
-        ("2", "두 번째 사용자", "매칭 신청 → match 생성"),
-        ("3", "두 화면", "상태 변경을 실시간으로 수신")]
-for i, (n, who, what) in enumerate(demo):
-    y = 1.75 + i * 1.0
-    box(s, 0.6, y, 0.6, 0.6, n, fill=ACCENT, shape=MSO_SHAPE.OVAL, size=18, bold=True, color=WHITE, margin=0)
-    tx(s, 1.4, y - 0.05, 3.9, 0.35, who, size=13, color=MUTED)
-    tx(s, 1.4, y + 0.27, 3.9, 0.45, what, size=17, bold=True)
-tx(s, 0.6, 4.8, 4.8, 0.35, [[("열 파일  ", {"color": MUTED}), ("ai_시연/index.html", {"font": MONO, "bold": True})]], size=13)
-tx(s, 0.6, 5.12, 4.8, 0.35, "일반 창 + 시크릿 창 = 서로 다른 두 사용자", size=13, color=MUTED)
-for i, (title, lines) in enumerate([("일반 창 · 사용자 A", [("① 매칭 신청", "waiting"), ("③ 실시간 수신", "matched")]),
-                                    ("시크릿 창 · 사용자 B", [("② 매칭 신청", "match 생성"), ("③ 실시간 수신", "matched")])]):
-    x = 5.65 + i * 3.6
-    box(s, x, 1.7, 3.4, 3.55, fill=WHITE, line="9CA3AF", radius=0.04)
-    box(s, x, 1.7, 3.4, 0.45, fill="E5E7EB", shape=MSO_SHAPE.RECTANGLE)
-    for d in range(3):
-        box(s, x + 0.15 + d * 0.22, 1.85, 0.14, 0.14, fill=["F87171", "FBBF24", "34D399"][d], shape=MSO_SHAPE.OVAL)
-    tx(s, x + 0.85, 1.72, 2.5, 0.4, title, size=12, bold=True, color="374151", anchor="m")
-    for j, (k, v) in enumerate(lines):
-        y = 2.4 + j * 1.38
-        tx(s, x + 0.25, y, 2.9, 0.35, k, size=13, color=MUTED)
-        hl = v == "matched"
-        box(s, x + 0.25, y + 0.38, 2.9, 0.7, v, fill=GOOD if hl else MATCH_T, line=None if hl else MATCH,
-            size=18, bold=True, color=WHITE if hl else MATCH, font=MONO, radius=0.2)
-box(s, 8.65, 5.65, 1.2, 0.95, "Firebase", fill=DB_T, line=DB, shape=MSO_SHAPE.CAN, size=12, bold=True)
-arrow(s, 7.35, 5.27, 8.62, 6.05, color=DB, tail=True)
-arrow(s, 11.15, 5.27, 9.88, 6.05, color=DB, tail=True)
-box(s, 0.6, 5.6, 4.8, 1.15, fill=WARN_T, line="FED7AA", radius=0.06)
-warn_icon(s, 0.8, 5.75, 0.38)
-tx(s, 1.3, 5.68, 4.0, 1.0, [{"runs": "수업용 예제", "bold": True, "color": WARN, "size": 15},
-                            "상태 전환을 보여 주는 코드. 전용 게임 서버나 운영용 매칭 완성본이 아니다."],
-   size=12, after=2)
-
-# ---------------------------------------------------------------- 19. AI 초안
-s = content_slide(P5, "AI로 구조 초안 검토하기")
-tx(s, 0.6, 1.65, 12.1, 1.0, [[("AI에게 구조를 결정하게 하지 말고, ", {}), ("빠진 질문을 찾게 한다.", {"color": ACCENT})]],
-   size=26, bold=True)
-tx(s, 0.6, 2.75, 5.5, 0.4, "요청에 포함할 5가지", size=16, bold=True)
-for i, t in enumerate(["경기 인원과 장르", "서버별 책임", "지속 저장 데이터 · 실시간 데이터", "권한과 예외 상황", "원하는 결과물 형식"]):
-    y = 3.25 + i * 0.66
-    box(s, 0.6, y, 0.45, 0.45, str(i + 1), fill="EFF6FF", shape=MSO_SHAPE.OVAL, size=13, bold=True, color=ACCENT, margin=0)
-    tx(s, 1.25, y - 0.04, 4.8, 0.52, t, size=17, anchor="m")
-tx(s, 6.6, 2.75, 6.1, 0.4, "요청 예시", size=16, bold=True)
-box(s, 6.6, 3.25, 6.13, 1.95, fill="1E293B", radius=0.04, anchor="t", align="l", margin=0.3,
-    paras=[[("4인 협동 디펜스 게임이다.", {})],
-           [("서버 책임표 · API 목록 · 매칭 상태 · 테스트 시나리오를 만들고", {})],
-           [("네가 가정한 부분은 따로 표시해 줘.", {"color": "FCD34D", "bold": True})]],
-    size=15, color="E2E8F0", after=8)
-tx(s, 6.6, 5.45, 6.1, 0.8, [[("→ ", {"color": ACCENT, "bold": True}),
-                            ("답은 정답이 아니라 ", {}), ("팀 검토의 시작점", {"bold": True}), ("으로 쓴다", {})]], size=15)
-
-# ---------------------------------------------------------------- 20. AI 검증
-s = content_slide(P5, "AI 답변 검증")
-table(s, 0.6, 1.75, [2.4, 5.2], [
-    ["확인할 것", "검증 방법"],
-    ["서버 책임", "우리 실제 기획 · 구조와 대조한다"],
-    ["기술 기능", "공식 문서와 실제 실행으로 확인한다 (기능 · 요금은 자주 바뀐다)"],
-    ["권한 · 보안", "규칙을 만들고, 다른 사용자 데이터를 직접 써 본다"],
-    ["예외 처리", "취소 · 이탈 · 재접속을 실제로 테스트한다"],
-], row_h=0.85, head_h=0.5, size=15)
-box(s, 8.5, 1.75, 4.23, 3.9, fill=NAVY, radius=0.05)
-tx(s, 8.8, 1.95, 3.7, 0.35, "특히 조심할 문장", size=13, bold=True, color="FCD34D")
-tx(s, 8.8, 2.35, 3.7, 0.7, "“서버가 판정한다”", size=26, bold=True, color=WHITE)
-tx(s, 8.8, 3.2, 3.7, 0.7, "→ 실제 권한 주체가 누구인지 다시 묻는다", size=16, bold=True, color="E2E8F0")
-tx(s, 8.8, 4.05, 3.7, 1.4, "릴레이 서버를 쓰면서 ‘서버가 판정한다’고 적힌 설계가 의외로 많다. 메시지가 서버를 지나간다고 서버가 판정하는 것은 아니다.",
-   size=13, color="94A3B8")
-tx(s, 0.6, 6.05, 12.13, 0.6, "TCP · UDP · Firebase · Photon에 대한 AI 설명은 제품 문서와 실제 실행으로 확인한다.", size=15, color=MUTED)
-
-# ---------------------------------------------------------------- 21. 설계 순서
-s = content_slide("정리", "설계 순서 6단계")
-tag(s, "핸드아웃 §6")
-order = [("인원 · 장르 · 지연 민감 행동", "몇 명? 0.1초에 민감한 행동은?"),
-         ("데이터를 세 종류로 나눈다", "지속 · 매칭 · 실시간 데이터"),
-         ("확정 주체와 저장 위치", "누가 확정하고, 어디에 저장하나?"),
-         ("API와 실시간 메시지 분리", "요청·응답 목록 / 룸 메시지 목록"),
-         ("예외를 상태도로 검토", "취소 · 이탈 · 재접속 · 중복 · 저장 실패"),
-         ("최소 인원으로 실제 테스트", "접속 · 지연 · 이탈을 기기 두 대로라도")]
-for i, (k, v) in enumerate(order):
-    x = 0.6 + (i % 3) * 4.14
-    y = 1.7 + (i // 3) * 2.3
-    hl = i == 2
-    box(s, x, y, 3.85, 2.1, fill="EFF6FF" if hl else PANEL, line=ACCENT if hl else "E5E7EB", lw=1.5 if hl else 1, radius=0.05)
-    tx(s, x + 0.25, y + 0.15, 1, 0.6, f"{i + 1}", size=30, bold=True, color=ACCENT)
-    tx(s, x + 0.25, y + 0.8, 3.4, 0.5, k, size=17, bold=True)
-    tx(s, x + 0.25, y + 1.3, 3.4, 0.7, v, size=13, color=MUTED)
-tx(s, 0.6, 6.4, 12.13, 0.45, [[("도구보다 구조가 먼저.  ", {"bold": True, "color": ACCENT}),
-                              ("서버 기술을 고르는 것은 거의 마지막 단계다.", {})]], size=16)
-
-# ---------------------------------------------------------------- 22. 질의응답
+# ---------------------------------------------------------------- 15. 질의응답
 s = dark_slide()
 tx(s, 0.9, 0.9, 11, 1.0, "질의응답", size=44, bold=True, color=WHITE)
 tx(s, 0.9, 1.95, 11, 0.5, "질문할 때 알려 주세요", size=18, color="93C5FD", bold=True)
@@ -778,7 +630,8 @@ for i in range(1, len(parts), 2):
     title = head[: m.start()].strip() if m else head.strip()
     timing = m.group(1) if m else ""
     body = re.sub(r"\*\*(.+?)\*\*", r"\1", body).strip()
-    notes[int(parts[i])] = f"[{title} · {timing}]\n\n{body}"
+    label = f"{title} · {timing}" if timing else title
+    notes[int(parts[i])] = f"[{label}]\n\n{body}"
 
 assert len(prs.slides) == TOTAL, len(prs.slides)
 for n, slide in enumerate(prs.slides, start=1):
